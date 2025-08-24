@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { width: 300px; margin: 20px auto; }
+        input, button { padding: 10px; margin: 5px; width: 90%; }
+        ul { list-style: none; padding: 0; }
+        li { display: flex; justify-content: space-between; padding: 10px; border: 1px solid #000; margin: 5px 0; }
+        .completed { text-decoration: line-through; color: gray; }
+        /* Body styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #89f7fe, #66a6ff);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container Card */
+.container {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 380px;
+}
+
+/* Heading */
+h1 {
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #333;
+}
+
+/* Input fields */
+input[type="text"], input[type="datetime-local"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus, input[type="datetime-local"]:focus {
+    border-color: #66a6ff;
+    box-shadow: 0px 0px 8px rgba(102,166,255,0.5);
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #66a6ff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 5px;
+}
+
+button:hover {
+    background:#4b8de6;
+}
+/* Task List */
+.task {
+    background: #f9f9f9;
+    margin: 15px 0;
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Task text */
+.task span {
+    font-size: 15px;
+    font-weight: 500;
+    color: #444;
+}
+
+/* Buttons inside tasks */
+.task button {
+    width: auto;
+    padding: 8px 14px;
+    margin-left: 5px;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+/* Different button colors */
+.task .edit {
+    background: #ff9800;
+}
+.task .edit:hover {
+    background: #e68900;
+}
+
+.task .done {
+    background: #4CAF50;
+}
+.task .done:hover {
+    background: #3d8b41;
+}
+
+.task .delete {
+    background: #f44336;
+}
+.task .delete:hover {
+    background: #d32f2f;
+}
+
+    </style>
+</head>
+<body>
+
+  
+
+
+    <div class="container">
+        <h2>To-Do List</h2>
+        <input type="text" id="taskInput" placeholder="Enter task...">
+        <input type="datetime-local" id="taskDateTime">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskDateTime = document.getElementById("taskDateTime");
+            const taskList = document.getElementById("taskList");
+
+            if (taskInput.value.trim() === "") return;
+            
+            const li = document.createElement("li");
+            li.innerHTML = `${taskInput.value} - ${taskDateTime.value} 
+                <button onclick="editTask(this)">Edit</button> 
+                <button onclick="completeTask(this)">Done</button> 
+                <button onclick="removeTask(this)">Delete</button>`;
+            
+            taskList.appendChild(li);
+            taskInput.value = "";
+            taskDateTime.value = "";
+        }
+
+        function editTask(button) {
+            const li = button.parentElement;
+            const taskText = li.childNodes[0].nodeValue.split(" - ")[0];
+            const newTask = prompt("Edit Task:", taskText);
+            if (newTask) li.childNodes[0].nodeValue = newTask + " - " + li.childNodes[0].nodeValue.split(" - ")[1];
+        }
+
+        function completeTask(button) {
+            button.parentElement.classList.toggle("completed");
+        }
+
+        function removeTask(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</body>
+</html>
